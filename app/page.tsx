@@ -1,10 +1,11 @@
-import Header from "@/components/header"
+import Header from "@/components/Header"
+import Home from "@/components/Home"
 
-export default function Home() {
+export default function App() {
   return (
-    <main>
+    <>
       <Header />
-      <h1>Hello clever programmers, let&apos;s build the Amazon Store 🚀</h1>
-    </main>
+      <Home />
+    </>
   )
 }

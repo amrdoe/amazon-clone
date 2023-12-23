@@ -1,7 +1,7 @@
 import Image from "next/image";
-import Search from "./search";
-import Nav from "./nav";
-import Logo from "./logo";
+import Search from "./Search";
+import Nav from "./Nav";
+import Logo from "./Logo";
 
 export default function Header() {
     return (
