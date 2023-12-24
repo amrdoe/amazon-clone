@@ -20,33 +20,14 @@ export default function Home() {
 
         <div className="flex z-10 mx-[5px">
           <Product
+            id="1"
             title="The Lean Startup"
             price={11.99}
             image="https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._AC_SY400_.jpg"
             rating={3}
           />
           <Product
-            title="The Lean Startup"
-            price={11.99}
-            image="https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._AC_SY400_.jpg"
-            rating={3}
-          />
-        </div>
-
-        <div className="flex z-10 mx-[5px">
-          <Product
-            title="The Lean Startup"
-            price={11.99}
-            image="https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._AC_SY400_.jpg"
-            rating={3}
-          />
-          <Product
-            title="The Lean Startup"
-            price={11.99}
-            image="https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._AC_SY400_.jpg"
-            rating={3}
-          />
-          <Product
+            id="1"
             title="The Lean Startup"
             price={11.99}
             image="https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._AC_SY400_.jpg"
@@ -56,6 +37,31 @@ export default function Home() {
 
         <div className="flex z-10 mx-[5px">
           <Product
+            id="1"
+            title="The Lean Startup"
+            price={11.99}
+            image="https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._AC_SY400_.jpg"
+            rating={3}
+          />
+          <Product
+            id="1"
+            title="The Lean Startup"
+            price={11.99}
+            image="https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._AC_SY400_.jpg"
+            rating={3}
+          />
+          <Product
+            id="1"
+            title="The Lean Startup"
+            price={11.99}
+            image="https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._AC_SY400_.jpg"
+            rating={3}
+          />
+        </div>
+
+        <div className="flex z-10 mx-[5px">
+          <Product
+            id="1"
             title="The Lean Startup"
             price={11.99}
             image="https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._AC_SY400_.jpg"

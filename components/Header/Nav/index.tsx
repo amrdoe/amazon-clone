@@ -1,6 +1,6 @@
 "use client";
 
-import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
+import Cart from "./Cart";
 
 export default function Nav() {
   return (
@@ -17,10 +17,7 @@ export default function Nav() {
         <span className="text-[10px]">Your</span>
         <span className="text-[13px] font-extrabold">Prime</span>
       </div>
-      <div className="flex items-center text-white">
-        <ShoppingBasketIcon />
-        <span className="text-[13px] font-extrabold mx-[10px]">0</span>
-      </div>
+      <Cart />
     </nav>
   )
 }
