@@ -1,14 +1,12 @@
 "use client";
 
 import Cart from "./Cart";
+import Auth from "./Auth";
 
 export default function Nav() {
   return (
     <nav className="flex justify-evenly">
-      <div className="flex flex-col mx-[10px] text-white">
-        <span className="text-[10px]">Hello Amr</span>
-        <span className="text-[13px] font-extrabold">Sign In</span>
-      </div>
+      <Auth />
       <div className="flex flex-col mx-[10px] text-white">
         <span className="text-[10px]">Returns</span>
         <span className="text-[13px] font-extrabold">& Orders</span>
@@ -19,5 +17,5 @@ export default function Nav() {
       </div>
       <Cart />
     </nav>
-  )
+  );
 }

@@ -1,5 +1,6 @@
 import { Item, useStateValue } from "@/lib/StateContext";
 import Image from "next/image";
+import Button from "../Button";
 
 export default function Item({ id, image, title, price, rating }: Item) {
   const [_, dispatch] = useStateValue();
@@ -7,10 +8,10 @@ export default function Item({ id, image, title, price, rating }: Item) {
   const removeFromBasket = () => {
     // remove the item from the basket
     dispatch({
-      type: 'REMOVE_FROM_BASKET',
-      id
-    })
-  }
+      type: "REMOVE_FROM_BASKET",
+      id,
+    });
+  };
   return (
     <div className="flex my-[20px] ">
       <Image
@@ -30,17 +31,15 @@ export default function Item({ id, image, title, price, rating }: Item) {
         </p>
 
         <div className="flex">
-          {Array(rating).fill(0).map((_, i) => (
-            <p key={i}>⭐</p>
-          ))}
+          {Array(rating)
+            .fill(0)
+            .map((_, i) => (
+              <p key={i}>⭐</p>
+            ))}
         </div>
 
-        <button
-          className="bg-[#f0c14b] border mt-[10px] border-t-[#a88734] border-x-[#9c7e31] border-b-[#846a29] text-[#111]"
-          onClick={removeFromBasket}>
-          Remove from basket
-        </button>
+        <Button onClick={removeFromBasket}>Remove from basket</Button>
       </div>
     </div>
-  )
+  );
 }

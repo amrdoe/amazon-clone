@@ -19,6 +19,12 @@ const nextConfig = {
         hostname: 'images-na.ssl-images-amazon.com',
         port: '',
         pathname: '/images/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'upload.wikimedia.org',
+        port: '',
+        pathname: '/**',
       }
     ],
   },
