@@ -6,7 +6,7 @@ import Item from "./Item";
 import { useStateValue } from "@/lib/StateContext";
 
 export default function Checkout() {
-  const [{ cart }] = useStateValue();
+  const [{ cart, user }] = useStateValue();
 
   return (
     <div className="flex p-[20px] bg-white h-max">
@@ -20,18 +20,20 @@ export default function Checkout() {
         />
 
         <div>
+          <h3>Hello, {user?.email}</h3>
           <h2 className="mr-[10px] p-[10px] border-b border-b-[lightgray]">
             Your Shopping Basket
           </h2>
 
-          {cart.map((item, i) => <Item key={i} {...item} />)}
+          {cart.map((item, i) => (
+            <Item key={i} {...item} />
+          ))}
         </div>
       </div>
 
       <div>
         <Subtotal />
-
       </div>
     </div>
-  )
+  );
 }

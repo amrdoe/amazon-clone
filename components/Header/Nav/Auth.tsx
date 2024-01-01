@@ -11,7 +11,7 @@ export default function Auth() {
       className="flex flex-col mx-[10px] text-white cursor-pointer"
       onClick={() => signOut(auth)}
     >
-      <span className="text-[10px]">Hello Guest</span>
+      <span className="text-[10px]">Hello, {user.email}</span>
       <span className="text-[13px] font-extrabold">Sign Out</span>
     </div>
   ) : (
