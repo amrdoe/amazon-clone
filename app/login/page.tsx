@@ -2,7 +2,7 @@
 
 import Button from "@/components/Button";
 import { auth } from "@/lib/firebase";
-import { sign } from "crypto";
+import useRedirectIfAuthenticated from "@/lib/useRedirectIfAuthenticated";
 import {
   AuthError,
   createUserWithEmailAndPassword,
@@ -14,6 +14,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function LoginPage() {
+  useRedirectIfAuthenticated();
+
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

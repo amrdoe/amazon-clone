@@ -1,71 +1,92 @@
 import { User } from "firebase/auth";
 import { Dispatch, ReducerState, createContext, useContext } from "react";
 
-interface AddToBasketAction {
-  type: 'ADD_TO_BASKET'
-  item: Item
+interface AddToCartAction {
+  type: "ADD_TO_CART";
+  item: Item;
 }
 
-interface RemoveFromBasketAction {
-  type: 'REMOVE_FROM_BASKET'
-  id: string
+interface EmptyCartAction {
+  type: "EMPTY_CART";
+}
+
+interface RemoveFromCartAction {
+  type: "REMOVE_FROM_CART";
+  id: string;
 }
 
 interface SetUserAction {
-  type: 'SET_USER'
-  user: User | null
+  type: "SET_USER";
+  user: User | null;
 }
 
 export interface Item {
-  id: string,
-  title: string,
-  image: string,
-  price: number,
-  rating: number
+  id: string;
+  title: string;
+  image: string;
+  price: number;
+  rating: number;
 }
 
-export type Action = AddToBasketAction | RemoveFromBasketAction | SetUserAction;
+export type Action =
+  | AddToCartAction
+  | EmptyCartAction
+  | RemoveFromCartAction
+  | SetUserAction;
 
 export const initialState = {
   cart: [] as Item[],
-  user: null as User | null
-}
+  user: null as User | null,
+};
 
-export const reducer = (state: typeof initialState, action: Action): typeof initialState => {
+export const reducer = (
+  state: typeof initialState,
+  action: Action
+): typeof initialState => {
   switch (action.type) {
-    case 'ADD_TO_BASKET':
+    case "ADD_TO_CART":
       return {
         ...state,
-        cart: [...state.cart, action.item]
-      }
+        cart: [...state.cart, action.item],
+      };
 
-    case 'REMOVE_FROM_BASKET':
-      const index = state.cart.findIndex(item => item.id === action.id);
+    case "EMPTY_CART":
+      return {
+        ...state,
+        cart: [],
+      };
+
+    case "REMOVE_FROM_CART":
+      const index = state.cart.findIndex((item) => item.id === action.id);
       let newCart = [...state.cart];
 
       if (index >= 0) {
         newCart.splice(index, 1);
       } else {
-        console.warn(`Can't remove product (id: ${action.id}) as it's not in the basket!`);
+        console.warn(
+          `Can't remove product (id: ${action.id}) as it's not in the cart!`
+        );
       }
 
       return {
         ...state,
-        cart: newCart
-      }
+        cart: newCart,
+      };
 
-    case 'SET_USER':
+    case "SET_USER":
       return {
         ...state,
-        user: action.user
-      }
-      
+        user: action.user,
+      };
+
     default:
       return state;
   }
-}
+};
 
-const StateContext = createContext<[ReducerState<typeof reducer>, Dispatch<Action>]>([initialState, () => { }]);
+const StateContext = createContext<
+  [ReducerState<typeof reducer>, Dispatch<Action>]
+>([initialState, () => {}]);
 export const useStateValue = () => useContext(StateContext);
 
 export default StateContext;

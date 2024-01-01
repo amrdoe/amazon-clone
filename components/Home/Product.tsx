@@ -9,10 +9,10 @@ import Button from "../Button";
 function Product({ id, title, image, price, rating }: Item) {
   const [_, dispatch] = useStateValue();
 
-  const addToBasket = () => {
+  const addToCart = () => {
     // dispatch the item into the data layer
     dispatch({
-      type: "ADD_TO_BASKET",
+      type: "ADD_TO_CART",
       item: {
         id,
         title,
@@ -48,7 +48,7 @@ function Product({ id, title, image, price, rating }: Item) {
         className="max-h-[200px] w-full object-contain mb-[15px]"
       />
 
-      <Button onClick={addToBasket}>Add to Basket</Button>
+      <Button onClick={addToCart}>Add to cart</Button>
     </div>
   );
 }

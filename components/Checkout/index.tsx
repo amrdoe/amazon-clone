@@ -22,7 +22,7 @@ export default function Checkout() {
         <div>
           <h3>Hello, {user?.email}</h3>
           <h2 className="mr-[10px] p-[10px] border-b border-b-[lightgray]">
-            Your Shopping Basket
+            Your Shopping Cart
           </h2>
 
           {cart.map((item, i) => (

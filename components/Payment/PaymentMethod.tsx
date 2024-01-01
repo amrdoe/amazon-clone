@@ -1,6 +1,7 @@
 "use client";
 
 import { useStateValue } from "@/lib/StateContext";
+import { db } from "@/lib/firebase";
 import formatMoney from "@/lib/formatMoney";
 import useClientSecret from "@/lib/useClientSecret";
 import {
@@ -9,9 +10,15 @@ import {
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js";
-import { StripeCardElementChangeEvent, loadStripe } from "@stripe/stripe-js";
+import {
+  StripeCardElementChangeEvent,
+  StripeError,
+  loadStripe,
+} from "@stripe/stripe-js";
+import { doc, setDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import Button from "../Button";
 
 const stripe = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || "");
 
@@ -27,12 +34,11 @@ const PaymentMethodElement = () => {
   const { push } = useRouter();
   const stripe = useStripe();
   const elements = useElements();
-  const [{ cart }] = useStateValue();
+  const [{ cart, user }, dispatch] = useStateValue();
 
   const total = cart.reduce((amount, item) => item.price + amount, 0);
 
   const clientSecret = useClientSecret(total);
-  console.log("CLIENT SECRET >>>", clientSecret);
 
   const [succeeded, setSucceeded] = useState(false);
   const [processing, setProcessing] = useState(false);
@@ -43,17 +49,45 @@ const PaymentMethodElement = () => {
     event.preventDefault();
     setProcessing(true);
 
-    const result = await stripe?.confirmCardPayment(clientSecret, {
-      payment_method: {
-        card: elements?.getElement(CardElement)!,
-      },
-    });
+    try {
+      const result = await stripe?.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: elements?.getElement(CardElement)!,
+        },
+      });
 
-    setSucceeded(true);
-    setError("");
-    setProcessing(false);
+      if (!result || result.error) throw result?.error;
 
-    push("/orders");
+      if (user?.uid) {
+        const payment = doc(
+          db,
+          "users",
+          user.uid,
+          "orders",
+          result.paymentIntent.id
+        );
+
+        await setDoc(payment, {
+          cart,
+          amount: result.paymentIntent.amount,
+          created: result.paymentIntent.created,
+        });
+      }
+
+      setSucceeded(true);
+      setError("");
+      setProcessing(false);
+
+      dispatch({ type: "EMPTY_CART" });
+
+      push("/orders");
+    } catch (error) {
+      console.log(error);
+      setSucceeded(false);
+      setError((error as StripeError).message || "");
+    } finally {
+      setProcessing(false);
+    }
   };
 
   const handleChange = async (event: StripeCardElementChangeEvent) => {
@@ -72,9 +106,9 @@ const PaymentMethodElement = () => {
 
           <div>
             <h3>Order Total:{formatMoney(total)}</h3>
-            <button disabled={processing || disabled || succeeded}>
+            <Button className="rounded-[2px] w-full h-[30px] font-extrabold" disabled={processing || disabled || succeeded}>
               <span>{processing ? "Processing" : "Buy Now"}</span>
-            </button>
+            </Button>
           </div>
         </form>
       </div>
